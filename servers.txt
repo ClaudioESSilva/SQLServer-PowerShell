@@ -1,0 +1,10 @@
+﻿Server	Database
+sql2008	dbareports
+sql2008	locations
+sql2005	dumpsterfire4
+sql2005	SharePoint_Config
+sql2000	pubs
+sqlcluster	SharePoint_Config
+sqlcluster	dbclrassembly
+sqlcluster	dbfilestream
+sqlcluster	dbfulltext
