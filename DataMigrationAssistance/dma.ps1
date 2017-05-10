@@ -3,7 +3,7 @@ $servers = Import-Csv "C:\dma\servers.txt" -Delimiter "`t" #tab
 
 $resultFolder = "C:\temp\results"
 
-#passar todos os servidores e bases de dados da lista
+#go through each server/database on the file
 foreach ($srv in $servers) {
     $instance = $srv.Server
     $database = $srv.Database
