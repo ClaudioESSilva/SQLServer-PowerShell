@@ -1,5 +1,5 @@
 ﻿#& "${env:ProgramFiles}\Microsoft Data Migration Assistant\DmaCmd.exe" /AssessmentName="TestAssessment" /AssessmentDatabases="Server=SQL2000;Initial Catalog=pubs;Integrated Security=true" /AssessmentTargetPlatform="SqlServer2016" /AssessmentEvaluateCompatibilityIssues /AssessmentOverwriteResult /AssessmentResultCsv="C:\temp\Results\AssessmentReport2000.csv" /AssessmentResultJson="C:\temp\results\test2000.json"
-$servers = Import-Csv "C:\Csilva\OneDrive\Git\dma\servers.txt" -Delimiter "`t" #tab
+$servers = Import-Csv "C:\dma\servers.txt" -Delimiter "`t" #tab
 
 $resultFolder = "C:\temp\results"
 
