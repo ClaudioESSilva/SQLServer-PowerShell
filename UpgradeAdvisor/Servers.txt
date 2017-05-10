@@ -1,0 +1,4 @@
+Server	Instance
+sql2008	
+sql2005	
+sql2000	
