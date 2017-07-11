@@ -5,40 +5,43 @@ $reportServerUri = 'http://localhost/ReportServer_URL'
 
 #source parameters
 $sourceRSFolder = "/FolderA"
-$downloadFolder = "C:\Temp\SSRS"
+$downloadFolder = "D:\Temp\FolderA_Reports"
 
 #destination parameters
 $destinationFolderPath = "/"
 $destinationFolderName = "FolderB"
-$newRSFolderPath = "$destinationFolderPath$destinationFolderName"
+$newRSFolderPath = "$destinationFolderPath/$destinationFolderName"
 
-#data source parameters
-$newRSDSFolder = "$destinationFolderPath$destinationFolderName"
+#data source configuration
+$newRSDSFolder = "$destinationFolderPath/$destinationFolderName"
 $newRSDSName = "Datasource"
 $newRSDSExtension = "SQL"
-$newRSDSConnectionString = "Initial Catalog=database; Data Source=instance"
+$newRSDSConnectionString = "Initial Catalog=Db1; Data Source=Server1"
 $newRSDSCredentialRetrieval = "Store"
-$newRSDSCredential = Get-Credential -Message "Specify the username and password to setup the datasource"
-$DataSourcePath = "$newRSDSFolder/$newRSDSName"
+$newRSDSCredential = Get-Credential -Message "Enter user credentials for data source"
 
+$DataSourcePath = "$newRSDSFolder/$newRSDSName"
 
 # Creates a new folder on the root of report server
 New-RsFolder -ReportServerUri $reportServerUri -RsFolder $destinationFolderPath -FolderName $destinationFolderName
 
 #Download all objects of type Report
-Get-RsFolderContent -ReportServerUri $reportServerUri -RsFolder $sourceRSFolder | Where-Object TypeName -eq 'Report' | Out-RsCatalogItem -Destination $downloadFolder
+Get-RsFolderContent -ReportServerUri $reportServerUri -RsFolder $sourceRSFolder |  Where-Object TypeName -eq 'Report' |
+    Select-Object -ExpandProperty Path |
+    Out-RsCatalogItem -ReportServerUri $reportServerUri -Destination $downloadFolder
+
 
 #Download all files in the diretory
-#Out-RsFolderContent -ReportServerUri $reportServerUri -RsFolder $sourceRSFolder -Destination "D:\Binarios\Reportings eSPap"
+#Out-RsFolderContent -ReportServerUri $reportServerUri -RsFolder $sourceRSFolder -Destination $downloadFolder
 
 #Upload all files from the download folder
-Write-RsFolderContent -ReportServerUri $reportServerUri -Path $downloadFolder -RsFolder $newRSFolderPath #-Verbose
+Write-RsFolderContent -ReportServerUri $reportServerUri -Path $downloadFolder -RsFolder $newRSFolderPath
 
 #Add new datasource
 New-RsDataSource -ReportServerUri $reportServerUri -RsFolder $newRSDSFolder -Name $newRSDSName -Extension $newRSDSExtension -ConnectionString $newRSDSConnectionString -CredentialRetrieval $newRSDSCredentialRetrieval -DatasourceCredentials $newRSDSCredential
 
 # Set report datasource
-Get-RsCatalogItems -ReportServerUri $reportServerUri -RsFolder $destinationFolderPath | Where-Object TypeName -eq 'Report' | ForEach-Object {
+Get-RsCatalogItems -ReportServerUri $reportServerUri -RsFolder $newRSFolderPath | Where-Object TypeName -eq 'Report' | ForEach-Object {
     $dataSource = Get-RsItemReference -ReportServerUri $reportServerUri -Path $_.Path
     if ($dataSource -ne $null) {
         Set-RsDataSourceReference -ReportServerUri $reportServerUri -Path $_.Path -DataSourceName $dataSource.Name -DataSourcePath $DataSourcePath
