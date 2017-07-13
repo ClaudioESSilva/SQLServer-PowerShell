@@ -2,7 +2,7 @@
 $sqlInstance = "<LISTENER>or<One of the instances - if only one AG>"
 $database = "<DBNAME>"
 
-$AGInfo = Get-DbaAvailabilityGroup -SqlInstance $sqlInstance -
+$AGInfo = Get-DbaAvailabilityGroup -SqlInstance $sqlInstance
 $listBackups = Get-DbaBackupHistory -SqlInstance $AGInfo.ReplicaName -Database $database -Last
 
 #To get all results
