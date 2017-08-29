@@ -2,7 +2,7 @@ $topic = "relational-databases"
 $baseAdress = "https://opbuildstorageprod.blob.core.windows.net/output-pdf-files/en-us/SQL.sql-content/live/$topic"
 $gitHubRepo = "https://github.com/MicrosoftDocs/sql-docs/tree/live/docs/$topic"
 
-$outputDirectory = "d:\ToDelete\MSDocs"
+$outputDirectory = "d:\temp\MSDocs"
 
 if (!(Test-Path $outputDirectory)) {
     Write-Warning "Output directory $outputDirectory does not exists."
