@@ -40,7 +40,7 @@ https://claudioessilva.eu/2017/09/18/generate-markdown-table-of-contents-based-o
  
         foreach ($md in ($repoStructure | Sort-Object -Property Name)) {
             $suffix = $($md.Directory.ToString().Replace($BaseFolder, [string]::Empty)).Replace("\", "/")
-            $fileName = $($md.Name.TrimEnd($md.Extension))
+            $fileName = $md.Name -replace $md.Extension
             $TOC += "  * [$fileName]($([uri]::EscapeUriString(""$baseURL$suffix/$($md.Name)"")))$nl"
         }
     }
