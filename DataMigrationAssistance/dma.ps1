@@ -8,7 +8,7 @@ foreach ($srv in $servers) {
     $instance = $srv.Server
     $database = $srv.Database
 
-    $fileDate = Get-Date -Format "yyyymmdd-HHmmss"
+    $fileDate = Get-Date -Format "yyyyMMdd-HHmmss"
 
     $resultFileName = "$($database.replace('\','_'))_$fileDate"
     $resultFullPath = "$resultFolder\$($instance.replace('\','_'))\$($database.replace('\','_'))"
