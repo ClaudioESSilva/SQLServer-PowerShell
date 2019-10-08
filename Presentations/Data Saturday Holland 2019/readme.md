@@ -9,9 +9,9 @@ They contain for example the function that does the transpose of the datatable.
 
 # Instructions
 1. Create an empty database
-2. Run the existing SQL Scripts on [Tables](./dbatools database/Tables) and [Views](./dbatools database/Tables) folders.
+2. Run the existing SQL Scripts on [Tables](./dbatools%20database/Tables) and [Views](./dbatools%20database/Views) folders.
  2.1 Adjust the code of the view if needed.
-3. Configure your SQL Server agent jobs (you can use the scripts on [dbatools database](./dbatools database/AgentJobs) folder )
+3. Configure your SQL Server agent jobs (you can use the scripts on [dbatools database](./dbatools%20database/AgentJobs) folder
     3.1 Don't forget to change the path used on each step to your [DataCollection](./DataCollection) folder.
 4. Open the Power BI file dbatools.pbix and change the 2 parameters (`InstanceName` & `DatabaseName`)
     4.1 "Home" tab -> "Edit Queries" -> "Edit Parameters"
