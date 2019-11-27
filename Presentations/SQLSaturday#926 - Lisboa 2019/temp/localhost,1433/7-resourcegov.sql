@@ -1,0 +1,8 @@
+﻿/*
+	Created by REDGLUEL1\Claudio Silva using dbatools Export-DbaScript for objects on localhost,1433 at 11/26/2019 12:33:14
+	See https://dbatools.io/Export-DbaScript for more information
+*/
+ALTER RESOURCE GOVERNOR WITH (CLASSIFIER_FUNCTION = NULL);
+ALTER RESOURCE GOVERNOR WITH (MAX_OUTSTANDING_IO_PER_VOLUME = DEFAULT);
+ALTER RESOURCE GOVERNOR RECONFIGURE;
+ALTER RESOURCE GOVERNOR RECONFIGURE
