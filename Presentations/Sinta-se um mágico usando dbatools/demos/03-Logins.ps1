@@ -35,6 +35,7 @@ $splatNewDatabase = @{
 }
 New-DbaDatabase @splatNewDatabase
 
+
 # Add user to database mapped to login
 $splatAddUser = @{
     SqlInstance = $sql2016
@@ -43,3 +44,27 @@ $splatAddUser = @{
 }
 New-DbaDbUser @splatAddUser
 
+
+
+
+# Copy login between instances
+
+# Exists on source
+Get-DbaLogin -SqlInstance $docker1 -SqlCredential $sqlCredential -Login Webuser
+
+# Do not exists on destination
+Get-DbaLogin -SqlInstance $docker2 -SqlCredential $sqlCredential -Login Webuser
+
+$splatCopyLogin = @{
+    Source = $docker1
+    SourceSqlCredential = $sqlCredential
+    Destination = $docker2
+    DestinationSqlCredential = $sqlCredential
+    Login = "WebUser"
+    Force = $true
+}
+
+Copy-DbaLogin @splatCopyLogin
+
+
+Remove-DbaLogin -SqlInstance $docker2 -SqlCredential $sqlCredential -Login Webuser
