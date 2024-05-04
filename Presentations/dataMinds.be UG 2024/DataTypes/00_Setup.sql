@@ -1,0 +1,38 @@
+EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'DataTypes'
+GO
+use [master];
+GO
+ALTER DATABASE [DataTypes] SET  SINGLE_USER WITH ROLLBACK IMMEDIATE
+GO
+
+DROP DATABASE IF EXISTS DataTypes
+GO
+
+CREATE DATABASE [DataTypes]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'DataTypes', FILENAME = N'/var/opt/mssql/data/DataTypes.mdf' , SIZE = 6103040KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'DataTypes_log', FILENAME = N'/var/opt/mssql/data/DataTypes_log.ldf' , SIZE = 4202496KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+
+ALTER DATABASE DataTypes 
+SET RECOVERY SIMPLE
+GO
+
+/*
+	Create XE to capture memory grants, if needed
+*/
+DROP EVENT SESSION [QueryMemoryGrantUsage] ON SERVER 
+GO
+CREATE EVENT SESSION [QueryMemoryGrantUsage] ON SERVER 
+ADD EVENT sqlserver.query_memory_grant_usage
+(
+    ACTION(sqlserver.sql_text)
+    WHERE ([sqlserver].[session_id]=(60))
+)
+WITH (MAX_MEMORY=4096 KB,EVENT_RETENTION_MODE=ALLOW_SINGLE_EVENT_LOSS,MAX_DISPATCH_LATENCY=30 SECONDS,MAX_EVENT_SIZE=0 KB,MEMORY_PARTITION_MODE=NONE,TRACK_CAUSALITY=OFF,STARTUP_STATE=OFF)
+GO
+
+
