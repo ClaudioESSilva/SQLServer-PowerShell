@@ -72,7 +72,11 @@ GO
 */
 
 
-
+/*
+	How to identify without looking to the actual execution plan?
+		SQL Server 2022 (or newer) - XE (sqlserver.query_antipattern)
+			https://www.red-gate.com/simple-talk/databases/sql-server/performance-sql-server/sql-server-2022-capture-sql-anti-patterns/
+*/
 
 
 
