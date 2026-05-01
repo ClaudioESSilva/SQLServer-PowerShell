@@ -1,0 +1,1 @@
+This session is about the performance penalty that different collations can add
